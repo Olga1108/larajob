@@ -9,23 +9,36 @@
 </head>
 
 <body>
-	<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-		<div class="container-fluid">
+	<nav class="navbar bg-dark navbar-expand-lg" data-bs-theme="dark">
+		<div class="container">
 			<a class="navbar-brand" href="#">Navbar</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
+				<div class="navbar-nav ms-auto">
 					<a class="nav-link active" aria-current="page" href="#">Home</a>
-					<a class="nav-link" href="#">Features</a>
-					<a class="nav-link" href="#">Pricing</a>
-					<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+					@if(!Auth::check())
+					<a class="nav-link" href="{{route('login')}}">Login</a>
+					<a class="nav-link" href="{{route('create.seeker')}}">Job Seeker</a>
+					<a class="nav-link" href="{{route('create.employer')}}">Employer</a>
+					@endif
+					@if(Auth::check())
+					<a class="nav-link" id="logout" href="#">Logout</a>
+					@endif
+					<form id="form-logout" action="{{route('logout')}}" method="post">@csrf</form>
 				</div>
 			</div>
 		</div>
 	</nav>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+	<script>
+		let logout = document.getElementById('logout');
+		let form = document.getElementById('form-logout');
+		logout.addEventListener('click', function() {
+			form.submit();
+		})
+	</script>
 	@yield('content')
 </body>
 

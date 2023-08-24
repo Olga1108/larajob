@@ -5,14 +5,14 @@
 <div class="controller mt-5">
 	<div class="row d-flex justify-content-around">
 		<div class="col-md-4">
-			<h1>Looking for a job?</h1>
+			<h1>Looking for an employee?</h1>
 			<h3>Please create an account</h3>
 			<img src="{{asset('image/click-arrow.png')}}">
 		</div>
 		<div class="col-md-4">
 			<div class="card">
-				<div class="card-header">Register</div>
-				<form action="{{route('store.seeker')}}" method="post">@csrf
+				<div class="card-header">Employer Registration</div>
+				<form action="{{route('store.employer')}}" method="post">@csrf
 					<div class="card-body">
 						<div class="form-group">
 							<label for="">Full name</label>
