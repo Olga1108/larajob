@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bootstrap demo</title>
+	<title>Job Portal</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
@@ -18,8 +18,6 @@
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav ms-auto">
 					<a class="nav-link active" aria-current="page" href="#">Home</a>
-					<a class="nav-link active" aria-current="page" href="{{route('dashboard')}}">Dashboard</a>
-					<a class="nav-link active" aria-current="page" href="{{route('subscribe')}}">Subscribe</a>
 					@if(!Auth::check())
 					<a class="nav-link" href="{{route('login')}}">Login</a>
 					<a class="nav-link" href="{{route('create.seeker')}}">Job Seeker</a>
