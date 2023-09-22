@@ -6,6 +6,8 @@ use App\Http\Requests\RegistrationFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -72,7 +74,11 @@ class UserController extends Controller
 
         $credentails = $request->only('email', 'password');
         if (Auth::attempt($credentails)) {
-            return redirect()->intended('dashboard');
+            if (auth()->user()->user_type == 'employer') {
+                return redirect()->to('dashboard');
+            } else {
+                return redirect()->to('/');
+            }
         }
         return 'Wrong email or password';
     }
@@ -80,6 +86,57 @@ class UserController extends Controller
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('login');
+        return redirect()->to('/');
+        // return redirect()->route('login');
+    }
+
+    public function profile()
+    {
+        return view('profile.index');
+    }
+
+    public function seekerProfile()
+    {
+        return view('seeker.profile');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->with('error', 'Current password is incorrect!');
+        }
+
+        $user->password = Hash::make($request->password);
+        $user()->save();
+        return back()->with('success', 'Your password was updated successfully!');
+    }
+
+    public function uploadResume(Request $request)
+    {
+        $this->validate($request, [
+            'resume' => 'required|mimes:pdf,doc,docx',
+        ]);
+        if ($request->hasFile('resume')) {
+            $resume = $request->file('resume')->store('resume', 'public');
+            User::find(auth()->user()->id)->update(['resume' => $resume]);
+            return back()->with('success', 'Your resume has been updated successfully!');
+        }
+    }
+
+    public function update(Request $request)
+    {
+        if ($request->hasFile('profile_pic')) {
+            $imagePath = $request->file('profile_pic')->store('profile', 'public');
+            User::find(auth()->user()->id)->update(['profile_pic' => $imagePath]);
+        }
+        User::find(auth()->user()->id)->update($request->except('profile_pic'));
+
+        return back()->with('success', 'Your profile has been updated');
     }
 }
