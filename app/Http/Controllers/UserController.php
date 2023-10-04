@@ -139,4 +139,11 @@ class UserController extends Controller
 
         return back()->with('success', 'Your profile has been updated');
     }
+
+    public function jobApplied()
+    {
+        return User::with('listings')->get();
+        // $users = User::with('listings')->where('id', auth()->user()->id)->get();
+        // return view('seeker.job-applied')->with('users');
+    }
 }

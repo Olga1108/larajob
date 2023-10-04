@@ -27,7 +27,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::get('/', [JoblistingController::class, 'index'])->name('listing.index');
 Route::get('/company/{id}', [JoblistingController::class, 'company'])->name('company');
 
-Route::get('/job/{listing:slug}', [JoblistingController::class, 'show'])->name('job.show');
+Route::get('/jobs/{listing:slug}', [JoblistingController::class, 'show'])->name('job.show');
 
 Route::post('/resume/upload', [FileUploadController::class, 'store'])->middleware('auth');
 
@@ -49,6 +49,8 @@ Route::get('user/profile', [UserController::class, 'profile'])->name('user.profi
 Route::post('user/profile', [UserController::class, 'update'])->name('user.update.profile')->middleware('auth');
 Route::get('user/profile/seeker', [UserController::class, 'seekerProfile'])->name('seeker.profile')->middleware('auth');
 Route::post('user/password', [UserController::class, 'changePassword'])->name('user.password')->middleware('auth');
+Route::get('user/job/applied', [UserController::class, 'jobApplied'])->name('job.applied')->middleware(['auth', 'verified']);
+
 Route::post('upload/resume', [UserController::class, 'uploadResume'])->name('upload.resume')->middleware('auth');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');

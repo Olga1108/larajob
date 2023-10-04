@@ -32,7 +32,7 @@
 						<ul class="dropdown-menu">
 							@if (auth()->user()->user_type === 'seeker')
 								<li><a class="nav-link active" aria-current="page" href="{{route('seeker.profile')}}">Profile</a></li>
-								<li><a class="nav-link active" aria-current="page" href="#">Job applied</a></li>
+								<li><a class="nav-link active" aria-current="page" href="{{route('job.applied')}}">Job applied</a></li>
 								<li><a class="nav-link" id="logout" href="#">Logout</a></li>
 							@else
 								<li><a class="nav-link" href="{{route('dashboard')}}">Dashboard</a></li>
